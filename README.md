@@ -99,8 +99,8 @@ Tener instalado Docker y Docker Compose.
 Pasos:
 
 # 1. Clonar el repositorio
-git clone https://github.com/usuario/microtask-manager.git
-cd microtask-manager
+git clone https://github.com/JonhatanCorona/MicroTask-Manager.git
+cd MicroTask-Manager
 
 # 2. Levantar los servicios
 docker-compose up --build
