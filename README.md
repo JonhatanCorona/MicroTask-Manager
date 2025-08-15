@@ -56,15 +56,32 @@ El proyecto está diseñado para ser escalable, seguro y fácil de desplegar gra
 ✅ Buenas prácticas para evitar inyecciones y vulnerabilidades comunes.
 
 🏗 Arquitectura del Sistema
-+-------------------+       +-------------------+       +-------------------+
-|   AuthService     | <---> |   UsersService    | <---> |   TasksService    |
-| - JWT Auth        |       | - CRUD Usuarios   |       | - CRUD Tareas     |
-| - Roles           |       | - Roles           |       | - Asignaciones    |
-+-------------------+       +-------------------+       +-------------------+
-        ^                            ^                          ^
-        | REST / Eventos             | REST / Eventos           | REST / Eventos
-        +-------------------------------------------------------------+
-                              Frontend / API Gateway
+
+          +-------------------+
+          |   AuthService     |
+          | - JWT Auth        |
+          | - Roles           |
+          +-------------------+
+                  ^
+                  | REST / Eventos
+          +-------------------+
+          |   UsersService    |
+          | - CRUD Usuarios   |
+          | - Roles           |
+          +-------------------+
+                  ^
+                  | REST / Eventos
+          +-------------------+
+          |   TasksService    |
+          | - CRUD Tareas     |
+          | - Asignaciones    |
+          +-------------------+
+                  ^
+                  | REST / Eventos
+          +-------------------+
+          | Frontend / API GW |
+          +-------------------+
+
 
 
 Bases de datos:
@@ -101,7 +118,7 @@ Bases de datos y redes necesarias.
 
 📚 Documentación de Endpoints
 
-En la carpeta /docs encontrarás documentación detallada por servicio y ejemplos de uso para Postman.
+En la [Documentacion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link)encontrarás documentación detallada por servicio y ejemplos de uso para Postman.
 
 Ejemplo Login (POST /auth/login):
 
