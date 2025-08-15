@@ -1,0 +1,83 @@
+
+services:
+  users-service:
+    build: ./users-service
+    ports:
+      - "${USERS_SERVICE_PORT}:3001"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - postgres
+    networks:
+      - backend
+    restart: on-failure
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "${AUTH_SERVICE_PORT}:3000"
+    environment:
+      - USERS_SERVICE_URL=${USERS_SERVICE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    depends_on:
+      - users-service
+    networks:
+      - backend
+    restart: on-failure
+
+  tasks-service:
+    build: ./tasks-service
+    ports:
+      - "${TASKS_SERVICE_PORT}:3002"
+    environment:
+      - MONGODB=${MONGODB}
+      - JWT_SECRET=${JWT_SECRET}
+    networks:
+      - backend
+    restart: on-failure
+
+  postgres:
+    image: postgres:15
+    container_name: microtask-postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  mongo:
+    image: mongo:6
+    container_name: microtask-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB=${MONGODB}
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+  mongodata:
+
+networks:
+  backend:
+    driver: bridge
