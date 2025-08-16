@@ -103,6 +103,7 @@ git clone https://github.com/JonhatanCorona/MicroTask-Manager.git
 cd MicroTask-Manager
 
 # 2. Levantar los servicios
+configurar el archivo .env ens raiz del proyecto. Ejemplo en archivo env.example
 docker-compose up --build
 
 
