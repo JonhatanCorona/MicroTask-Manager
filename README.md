@@ -79,7 +79,7 @@ Sigue estos pasos para levantar todo el entorno de desarrollo localmente.
 
 1.  **Clona el repositorio:**
     ```bash
-    git clone [https://github.com/JonhatanCorona/MicroTask-Manager.git](https://github.com/JonhatanCorona/MicroTask-Manager.git)
+    git clone https://github.com/JonhatanCorona/MicroTask-Manager.git
     cd MicroTask-Manager
 
 2.  **Configura las variables de entorno:**
@@ -142,6 +142,8 @@ DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${POSTG
 
 # MongoDB (para Mongoose en TasksService)
 MONGODB=mongodb+srv://your_mongo_user:your_mongo_password@cluster0.mongodb.net/microtask?retryWrites=true&w=majority
+
+
 
 ## 📚 Documentación y Uso de la API
 
