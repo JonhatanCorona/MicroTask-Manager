@@ -109,7 +109,7 @@ Una vez completado, los servicios estarán disponibles en los puertos configurad
 
 ---
 
-## ⚙️ Variables de Entorno (.env)
+### ⚙️ Variables de Entorno (.env)
 
 El archivo `.env` es crucial para la configuración del proyecto. A continuación se detallan las variables necesarias:
 
@@ -148,9 +148,47 @@ DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${POSTG
 MONGODB=mongodb+srv://your_mongo_user:your_mongo_password@cluster0.mongodb.net/microtask?retryWrites=true&w=majority
 
 
----
+---### ⚙️ Variables de Entorno (.env)
 
-## 📚 Documentación y Uso de la API
+El archivo `.env` es crucial para la configuración del proyecto. A continuación se detallan las variables necesarias:
+
+```ini
+# ========================================
+# 📦 Base de datos PostgreSQL
+# Utilizada por UsersService
+# ========================================
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_DB=microtask
+POSTGRES_PORT=5432
+DB_HOST=microtask-postgres # Nombre del servicio en docker-compose
+
+# ========================================
+# 🔐 Autenticación y JWT
+# Utilizadas por AuthService
+# ========================================
+JWT_SECRET=your_super_secret_jwt_key
+JWT_EXPIRES_IN=3600s
+
+# ========================================
+# 🌐 Puertos de los Microservicios
+# ========================================
+AUTH_SERVICE_PORT=3000
+USERS_SERVICE_PORT=3001
+TASKS_SERVICE_PORT=3002
+
+# ========================================
+# 🗄 Cadenas de Conexión a Bases de Datos
+# ========================================
+# PostgreSQL (para TypeORM en UsersService)
+DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+
+# MongoDB (para Mongoose en TasksService)
+MONGODB=mongodb+srv://your_mongo_user:your_mongo_password@cluster0.mongodb.net/microtask?retryWrites=true&w=majority
+
+```
+
+📚 Documentación y Uso de la API
 
 Para una guía detallada con colecciones de Postman, puedes consultar la [documentación completa en Notion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link).
 
@@ -162,9 +200,6 @@ Para obtener un token de acceso, envía una petición `POST` al endpoint:
 
 /auth/login
 
-css
-Copiar
-Editar
 
 **Request Body:**
 
@@ -173,16 +208,21 @@ Editar
   "email": "usuario@ejemplo.com",
   "password": "password123"
 }
+
+```
 Respuesta Exitosa:
 
-json
-Copiar
-Editar
+**Request Body:**
+
+```json
+
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIi..."
 }
+```
 
-###✅ Puntos Clave Cumplidos
+✅ Puntos Clave Cumplidos
+
 Arquitectura de Microservicios: Sistema desacoplado en servicios independientes y especializados.
 
 Bases de Datos Heterogéneas: Uso de PostgreSQL para datos relacionales (usuarios) y MongoDB para datos flexibles (tareas).
@@ -194,4 +234,3 @@ Funcionalidad CRUD Completa: Implementación total de operaciones para la gesti�
 Despliegue con Docker Compose: Entorno completo listo para producción con un solo comando.
 
 Código Limpio y Documentado: Estructura clara que facilita su mantenimiento y escalabilidad.
-
