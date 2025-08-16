@@ -42,11 +42,12 @@ El proyecto se compone de tres microservicios principales que se comunican a tra
 [Image of microservices architecture diagram]
 
 
-* **`AuthService`**: Responsable de la autenticación de usuarios y la generación de tokens JWT. Es el guardián del sistema.
-* **`UsersService`**: Gestiona toda la lógica relacionada con los usuarios, incluyendo el CRUD y la asignación de roles. Utiliza **PostgreSQL** por la naturaleza relacional de los datos de usuario.
-* **`TasksService`**: Maneja el CRUD de tareas y sus asignaciones. Utiliza **MongoDB** para ofrecer flexibilidad en la estructura de las tareas y facilitar futuras expansiones.
 
-Se aplica el patrón **CQRS** (Command and Query Responsibility Segregation) para separar la lógica de escritura (comandos) de la de lectura (consultas), optimizando el rendimiento y la escalabilidad de la base de datos.
+- **AuthService** → Autenticación y emisión de tokens JWT.  
+- **UsersService** → CRUD de usuarios y roles (PostgreSQL).  
+- **TasksService** → CRUD de tareas y asignaciones (MongoDB).  
+
+Se aplica **CQRS** para separar comandos y consultas, mejorando rendimiento y escalabilidad.  
 
 ---
 
@@ -54,95 +55,63 @@ Se aplica el patrón **CQRS** (Command and Query Responsibility Segregation) par
 
 | Categoría | Tecnología/Herramienta | Propósito |
 | :--- | :--- | :--- |
-| **Backend** | `NestJS`, `TypeScript` | Framework principal y lenguaje para construir la API. |
+| **Backend** | `NestJS`, `TypeScript` | Framework principal y lenguaje para la API. |
 | **Servidor HTTP** | `Express.js` | Servidor web subyacente para NestJS. |
-| **Bases de Datos** | `PostgreSQL`, `MongoDB` | Persistencia de datos (Usuarios y Tareas respectivamente). |
-| **ORM / ODM** | `TypeORM`, `Mongoose` | Mapeo de objetos y modelado de datos para SQL y NoSQL. |
-| **Seguridad** | `Passport.js`, `JWT`, `bcrypt` | Autenticación, autorización y encriptación de contraseñas. |
-| **Validación** | `class-validator` | Validación estricta de DTOs para proteger los endpoints. |
-| **DevOps** | `Docker`, `Docker Compose` | Contenerización y orquestación para el despliegue. |
-| **Testing** | `Jest`, `Supertest` | Pruebas unitarias y de integración. |
-| **Calidad de Código**| `ESLint`, `Prettier` | Linting y formateo de código para mantener un estilo consistente. |
+| **Bases de Datos** | `PostgreSQL`, `MongoDB` | Persistencia de datos (Usuarios y Tareas). |
+| **ORM / ODM** | `TypeORM`, `Mongoose` | Mapeo y modelado de datos. |
+| **Seguridad** | `Passport.js`, `JWT`, `bcrypt` | Autenticación, autorización y encriptación. |
+| **Validación** | `class-validator` | Validación estricta de DTOs. |
+| **DevOps** | `Docker`, `Docker Compose` | Contenerización y despliegue. |
+| **Testing** | `Jest`, `Supertest` | Pruebas unitarias e integración. |
+| **Calidad de Código** | `ESLint`, `Prettier` | Linting y formateo de código. |
 
 ---
 
 ## 🐳 Despliegue con Docker
 
-Sigue estos pasos para levantar todo el entorno de desarrollo localmente.
-
 ### Requisitos Previos
-
-* Tener instalado [Docker](https://www.docker.com/get-started)
-* Tener instalado [Docker Compose](https://docs.docker.com/compose/install/)
+- Tener instalado [Docker](https://www.docker.com/get-started).  
+- Tener instalado [Docker Compose](https://docs.docker.com/compose/install/).  
 
 ### Pasos para el Despliegue
 
-1.  **Clona el repositorio:**
-    ```bash
-    git clone https://github.com/JonhatanCorona/MicroTask-Manager.git
-    cd MicroTask-Manager
+1. **Clona el repositorio**
+   ```bash
+   git clone https://github.com/JonhatanCorona/MicroTask-Manager.git
+   cd MicroTask-Manager
+
 
 2.  **Configura las variables de entorno:**
     Copia el archivo de ejemplo y personalízalo con tus propias credenciales.
 
+    ```bash
     cp .env.example .env
+    ```
 
     Asegúrate de revisar y llenar las variables dentro del archivo `.env` (ver sección `⚙️ Variables de Entorno`).
 
 3.  **Levanta los servicios:**
     Este comando construirá las imágenes de Docker y levantará todos los contenedores (servicios y bases de datos) en segundo plano.
 
+    ```bash
     docker-compose up --build -d
+    ```
 
+---
 
 Una vez completado, los servicios estarán disponibles en los puertos configurados:
 
-| Servicio | Puerto Local | Documentación API |
-| :--- | :--- | :--- |
-| `auth-service` | `http://localhost:3000` | `http://localhost:3000/api` |
-| `users-service`| `http://localhost:3001` | `http://localhost:3001/api` |
-| `tasks-service`| `http://localhost:3002` | `http://localhost:3002/api` |
-
-### 📚 Documentación y Uso de la API
-
-Para una guía detallada con colecciones de Postman, puedes consultar la [documentación completa en Notion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link).
-
-### Ejemplo: Login de Usuario
-
-Para obtener un token de acceso, envía una petición `POST` al endpoint `/auth/login`.
-
-**Request Body**
-```json
-{
-  "email": "usuario@ejemplo.com",
-  "password": "password123"
-}
-Respuesta Exitosa
-
-JSON
-
-{
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIi..."
-}
-
-✅ Puntos Clave Cumplidos
-Arquitectura de Microservicios: Sistema desacoplado en servicios independientes y especializados.
-
-Bases de Datos Heterogéneas: Uso de PostgreSQL para datos relacionales (usuarios) y MongoDB para datos flexibles (tareas).
-
-Autenticación Segura con JWT: Endpoints protegidos mediante JSON Web Tokens y un sistema de autorización basado en roles.
-
-Funcionalidad CRUD Completa: Implementación total de operaciones para la gestión de usuarios y tareas.
-
-Despliegue con Docker Compose: Entorno completo listo para producción con un solo comando.
-
-Código Limpio y Documentado: Estructura clara que facilita su mantenimiento y escalabilidad.
+| Servicio        | Puerto Local               | Documentación API                |
+|-----------------|----------------------------|----------------------------------|
+| `auth-service`  | `http://localhost:3000`    | `http://localhost:3000/api`      |
+| `users-service` | `http://localhost:3001`    | `http://localhost:3001/api`      |
+| `tasks-service` | `http://localhost:3002`    | `http://localhost:3002/api`      |
 
 ---
 
 ## ⚙️ Variables de Entorno (.env)
 
-El archivo `.env` es crucial para la configuración del proyecto. A continuación se detallan las variables necesarias.
+El archivo `.env` es crucial para la configuración del proyecto. A continuación se detallan las variables necesarias:
 
 ```ini
 # ========================================
@@ -179,5 +148,50 @@ DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${POSTG
 MONGODB=mongodb+srv://your_mongo_user:your_mongo_password@cluster0.mongodb.net/microtask?retryWrites=true&w=majority
 
 
+---
 
+## 📚 Documentación y Uso de la API
+
+Para una guía detallada con colecciones de Postman, puedes consultar la [documentación completa en Notion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link).
+
+---
+
+### 🔑 Ejemplo: Login de Usuario
+
+Para obtener un token de acceso, envía una petición `POST` al endpoint:
+
+/auth/login
+
+css
+Copiar
+Editar
+
+**Request Body:**
+
+```json
+{
+  "email": "usuario@ejemplo.com",
+  "password": "password123"
+}
+Respuesta Exitosa:
+
+json
+Copiar
+Editar
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIi..."
+}
+
+###✅ Puntos Clave Cumplidos
+Arquitectura de Microservicios: Sistema desacoplado en servicios independientes y especializados.
+
+Bases de Datos Heterogéneas: Uso de PostgreSQL para datos relacionales (usuarios) y MongoDB para datos flexibles (tareas).
+
+Autenticación Segura con JWT: Endpoints protegidos mediante JSON Web Tokens y un sistema de autorización basado en roles.
+
+Funcionalidad CRUD Completa: Implementación total de operaciones para la gestión de usuarios y tareas.
+
+Despliegue con Docker Compose: Entorno completo listo para producción con un solo comando.
+
+Código Limpio y Documentado: Estructura clara que facilita su mantenimiento y escalabilidad.
 
