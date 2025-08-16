@@ -103,6 +103,41 @@ Una vez completado, los servicios estarán disponibles en los puertos configurad
 | `users-service`| `http://localhost:3001` | `http://localhost:3001/api` |
 | `tasks-service`| `http://localhost:3002` | `http://localhost:3002/api` |
 
+### 📚 Documentación y Uso de la API
+
+Para una guía detallada con colecciones de Postman, puedes consultar la [documentación completa en Notion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link).
+
+### Ejemplo: Login de Usuario
+
+Para obtener un token de acceso, envía una petición `POST` al endpoint `/auth/login`.
+
+**Request Body**
+```json
+{
+  "email": "usuario@ejemplo.com",
+  "password": "password123"
+}
+Respuesta Exitosa
+
+JSON
+
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIi..."
+}
+
+✅ Puntos Clave Cumplidos
+Arquitectura de Microservicios: Sistema desacoplado en servicios independientes y especializados.
+
+Bases de Datos Heterogéneas: Uso de PostgreSQL para datos relacionales (usuarios) y MongoDB para datos flexibles (tareas).
+
+Autenticación Segura con JWT: Endpoints protegidos mediante JSON Web Tokens y un sistema de autorización basado en roles.
+
+Funcionalidad CRUD Completa: Implementación total de operaciones para la gestión de usuarios y tareas.
+
+Despliegue con Docker Compose: Entorno completo listo para producción con un solo comando.
+
+Código Limpio y Documentado: Estructura clara que facilita su mantenimiento y escalabilidad.
+
 ---
 
 ## ⚙️ Variables de Entorno (.env)
@@ -145,37 +180,4 @@ MONGODB=mongodb+srv://your_mongo_user:your_mongo_password@cluster0.mongodb.net/m
 
 
 
-## 📚 Documentación y Uso de la API
 
-Para una guía detallada con colecciones de Postman, puedes consultar la [documentación completa en Notion](https://www.notion.so/250691e2efa0802ca379faaf4d0ddc37?v=250691e2efa08094978c000c32ace05c&source=copy_link).
-
-### Ejemplo: Login de Usuario
-
-Para obtener un token de acceso, envía una petición `POST` al endpoint `/auth/login`.
-
-**Request Body**
-```json
-{
-  "email": "usuario@ejemplo.com",
-  "password": "password123"
-}
-Respuesta Exitosa
-
-JSON
-
-{
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIi..."
-}
-
-## ✅ Puntos Clave Cumplidos
-Arquitectura de Microservicios: Sistema desacoplado en servicios independientes y especializados.
-
-Bases de Datos Heterogéneas: Uso de PostgreSQL para datos relacionales (usuarios) y MongoDB para datos flexibles (tareas).
-
-Autenticación Segura con JWT: Endpoints protegidos mediante JSON Web Tokens y un sistema de autorización basado en roles.
-
-Funcionalidad CRUD Completa: Implementación total de operaciones para la gestión de usuarios y tareas.
-
-Despliegue con Docker Compose: Entorno completo listo para producción con un solo comando.
-
-Código Limpio y Documentado: Estructura clara que facilita su mantenimiento y escalabilidad.
